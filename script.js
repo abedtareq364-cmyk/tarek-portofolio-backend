@@ -209,15 +209,40 @@ function swapCurrencies() {
   }
 }
 
-// 10. Pricing Calculator
+// 10. Pricing & Building Calculator (حاسبة الأسعار المزدوجة الذكية)
+function toggleCalculatorType() {
+    const category = document.getElementById('serviceCategory').value;
+    const webOptions = document.getElementById('webCalcOptions');
+    const buildingOptions = document.getElementById('buildingCalcOptions');
+
+    if (category === 'building') {
+        if (webOptions) webOptions.style.display = 'none';
+        if (buildingOptions) buildingOptions.style.display = 'block';
+    } else {
+        if (webOptions) webOptions.style.display = 'block';
+        if (buildingOptions) buildingOptions.style.display = 'none';
+    }
+    calculatePrice();
+}
+
 function calculatePrice() {
-  const siteType = parseFloat(document.getElementById("siteType")?.value || 150);
-  const langMultiplier = parseFloat(document.getElementById("langCount")?.value || 1);
-  const total = Math.round(siteType * langMultiplier);
-  const priceTag = document.getElementById("totalPrice");
-  if (priceTag) {
-    priceTag.innerText = `${total}€`;
-  }
+    const category = document.getElementById('serviceCategory')?.value || 'web';
+    let total = 0;
+    const priceTag = document.getElementById("totalPrice");
+
+    if (category === 'building') {
+        const pricePerSqm = parseFloat(document.getElementById('buildingType')?.value || 35);
+        const area = parseFloat(document.getElementById('surfaceArea')?.value || 30);
+        total = pricePerSqm * area;
+    } else {
+        const siteType = parseFloat(document.getElementById("siteType")?.value || 150);
+        const langMultiplier = parseFloat(document.getElementById("langCount")?.value || 1);
+        total = Math.round(siteType * langMultiplier);
+    }
+
+    if (priceTag) {
+        priceTag.innerText = `${total}€`;
+    }
 }
 
 // 11. Service Quick Selector
@@ -253,9 +278,27 @@ function changeLanguage(lang) {
       hero_title: "طارق خورشيد",
       hero_desc: "مطور واجهات ومواقع ويب احترافي. أقدم منصات ويب فائقة الأداء والتجاوب بتصاميم عصريّة وعالية الجودة تليق بتطلعات العملاء.",
       btn_whatsapp: "تواصل عبر الواتساب", portfolio_title: "معرض المشاريع والأعمال",
-      widgets_title: "أدوات تفاعلية حية (APIs)", services_title: "الخدمات البرمجية",
-      blog_title: "المدونة والشروحات التقنية", calc_title: "حاسبة الأسعار التقديرية الذكية",
-      contact_title: "تواصل معي مباشرة", btn_send: "إرسال الرسالة الآن 🚀"
+      widgets_title: "أدوات تفاعلية حية (APIs)", services_title: "الخدمات البرمجية والتشطيبات",
+      blog_title: "المدونة والشروحات التقنية", calc_title: "حاسبة التقدير الفوري للمشاريع والتشطيبات",
+      contact_title: "تواصل معي مباشرة", btn_send: "إرسال الرسالة الآن 🚀",
+      calc_service_label: "اختر مجال الخدمة المطلوب:",
+      opt_cat_web: "تطوير واجهات ومواقع الويب (Front-End)",
+      opt_cat_building: "مهن البناء والتشطيب بفرنسا (Métiers du Bâtiment)",
+      calc_site_type: "نوع الموقع المطلوب:",
+      opt_portfolio: "موقع شخصي / بورتفوليو تعريف (150€)",
+      opt_business: "موقع شركة أو نشاط تجاري (300€)",
+      opt_ecom: "متجر إلكتروني متكامل (500€)",
+      calc_lang_count: "عدد اللغات في الموقع:",
+      opt_l1: "لغة واحدة",
+      opt_l2: "لغتان (عربي + فرنسي/إنجليزي)",
+      opt_l3: "ثلاث لغات أو أكثر",
+      calc_building_type: "نوع الخدمة (Métiers du Bâtiment):",
+      opt_carreleur: "تركيب سيراميك وبلاط - Carreleur (ابتداءً من 35€ / م²)",
+      opt_plaquiste: "أعمال الجبس بورد والديكور - Plaquiste (ابتداءً من 25€ / م²)",
+      opt_peintre: "الدهانات والتشطيبات الداخلية - Peintre (ابتداءً من 20€ / م²)",
+      calc_surface_area: "المساحة التقريبية (بالمتر المربع م²):",
+      calc_total_text: "التكلفة التقديرية المبدئية:",
+      btn_book_calc: "اطلب هذا العرض الآن 🚀"
     },
     fr: {
       nav_home: "Accueil", nav_about: "À propos", nav_portfolio: "Portfolio",
@@ -265,9 +308,27 @@ function changeLanguage(lang) {
       hero_title: "Tarek Khorshed",
       hero_desc: "Développeur web et interfaces Front-End. Je conçois des plateformes web ultra-rapides, responsives et modernes.",
       btn_whatsapp: "Contacter sur WhatsApp", portfolio_title: "Projets & Réalisations",
-      widgets_title: "Widgets Interactifs (APIs)", services_title: "Services de Développement",
-      blog_title: "Blog & Tutoriels Techniques", calc_title: "Calculateur de Prix Intelligent",
-      contact_title: "Contactez-moi Directement", btn_send: "Envoyer le Message 🚀"
+      widgets_title: "Widgets Interactifs (APIs)", services_title: "Services Web & Bâtiment",
+      blog_title: "Blog & Tutoriels Techniques", calc_title: "Calculateur de Devis Interactif",
+      contact_title: "Contactez-moi Directement", btn_send: "Envoyer le Message 🚀",
+      calc_service_label: "Sélectionnez le domaine de service :",
+      opt_cat_web: "Développement Web & Front-End",
+      opt_cat_building: "Métiers du Bâtiment (France)",
+      calc_site_type: "Type de site web :",
+      opt_portfolio: "Site Portfolio / Personnel (150€)",
+      opt_business: "Site Vitrine / Entreprise (300€)",
+      opt_ecom: "Site E-commerce Complet (500€)",
+      calc_lang_count: "Nombre de langues :",
+      opt_l1: "Une seule langue",
+      opt_l2: "Deux langues (Arabe + Français/Anglais)",
+      opt_l3: "Trois langues ou plus",
+      calc_building_type: "Type de service (Bâtiment) :",
+      opt_carreleur: "Carreleur - Pose de carrelage (à partir de 35€ / m²)",
+      opt_plaquiste: "Plaquiste - Cloisons & Placo (à partir de 25€ / m²)",
+      opt_peintre: "Peintre en bâtiment - Finitions (à partir de 20€ / m²)",
+      calc_surface_area: "Surface approximative (en m²) :",
+      calc_total_text: "Estimation tarifaire indicative :",
+      btn_book_calc: "Commander ce devis 🚀"
     },
     en: {
       nav_home: "Home", nav_about: "About Us", nav_portfolio: "Portfolio",
@@ -277,9 +338,27 @@ function changeLanguage(lang) {
       hero_title: "Tarek Khorshed",
       hero_desc: "Professional Front-End web developer. I build high-performance, fully responsive web platforms with modern UI/UX.",
       btn_whatsapp: "Chat on WhatsApp", portfolio_title: "Portfolio & Works",
-      widgets_title: "Live Interactive Widgets (APIs)", services_title: "Development Services",
-      blog_title: "Tech Blog & Tutorials", calc_title: "Smart Cost Estimator",
-      contact_title: "Get In Touch", btn_send: "Send Message Now 🚀"
+      widgets_title: "Live Interactive Widgets (APIs)", services_title: "Web Services & Renovations",
+      blog_title: "Tech Blog & Tutorials", calc_title: "Smart Cost & Renovation Estimator",
+      contact_title: "Get In Touch", btn_send: "Send Message Now 🚀",
+      calc_service_label: "Select Service Domain:",
+      opt_cat_web: "Web & Front-End Development",
+      opt_cat_building: "Building & Renovation (France)",
+      calc_site_type: "Website Type:",
+      opt_portfolio: "Personal Portfolio (150€)",
+      opt_business: "Business Website (300€)",
+      opt_ecom: "E-commerce Store (500€)",
+      calc_lang_count: "Language Count:",
+      opt_l1: "Single Language",
+      opt_l2: "Two Languages (Arabic + French/English)",
+      opt_l3: "Three or More Languages",
+      calc_building_type: "Service Type (Bâtiment):",
+      opt_carreleur: "Tiler - Carreleur (from 35€ / m²)",
+      opt_plaquiste: "Drywaller - Plaquiste (from 25€ / m²)",
+      opt_peintre: "Painter - Peintre (from 20€ / m²)",
+      calc_surface_area: "Approximate Area (in m²):",
+      calc_total_text: "Estimated Initial Cost:",
+      btn_book_calc: "Book This Offer Now 🚀"
     }
   };
 
