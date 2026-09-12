@@ -56,6 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // تحميل الثيم المحفوظ (ليلي / نهاري) أول ما الصفحة تفتح
+  const savedTheme = localStorage.getItem("tarek_theme");
+  const themeBtnIcon = document.querySelector("#themeToggleBtn i");
+  if (savedTheme === "light") {
+    document.documentElement.classList.add("light-mode");
+    if (themeBtnIcon) {
+      themeBtnIcon.classList.replace("fa-moon", "fa-sun");
+    }
+  }
+
   // تشغيل الوظائف الأولية
   calculatePrice();
   getWeather();
@@ -255,15 +265,23 @@ function selectService(serviceName) {
   }
 }
 
-// 12. Theme Switcher Toggle
+// 12. Theme Switcher Toggle (الثيم الحقيقي للنهار والليل)
 function toggleTheme() {
+  const htmlElement = document.documentElement;
   const themeBtnIcon = document.querySelector("#themeToggleBtn i");
-  if (themeBtnIcon) {
-    if (themeBtnIcon.classList.contains("fa-moon")) {
-      themeBtnIcon.classList.replace("fa-moon", "fa-sun");
-    } else {
+
+  if (htmlElement.classList.contains("light-mode")) {
+    htmlElement.classList.remove("light-mode");
+    if (themeBtnIcon) {
       themeBtnIcon.classList.replace("fa-sun", "fa-moon");
     }
+    localStorage.setItem("tarek_theme", "dark");
+  } else {
+    htmlElement.classList.add("light-mode");
+    if (themeBtnIcon) {
+      themeBtnIcon.classList.replace("fa-moon", "fa-sun");
+    }
+    localStorage.setItem("tarek_theme", "light");
   }
 }
 
