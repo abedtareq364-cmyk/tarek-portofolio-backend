@@ -284,4 +284,52 @@ function handleGameClick() {
         text.textContent = 'اضغط الآن بسرعة!';
         startTime = new Date().getTime();
     }, randomTime);
-}
+} // ==========================================
+// معالجة وإرسال نموذج الاتصال (Contact Form)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm'); // تأكد أن الـ ID لنماذج الاتصال مطابق في الـ HTML
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault(); // منع إعادة تحميل الصفحة
+
+            // جلب القيم من حقول الإدخال (تأكد من مطابقة الـ IDs)
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            if (!nameInput || !emailInput || !messageInput) {
+                console.error('بعض حقول الإدخال غير موجودة في الـ HTML');
+                return;
+            }
+
+            const name = nameInput.value;
+            const email = emailInput.value;
+            const message = messageInput.value;
+
+            try {
+                // إرسال البيانات مباشرة إلى السيرفر الحي على Render
+                const response = await fetch('https://tarek-portofolio-backend.onrender.com/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, message })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('تم إرسال الرسالة بنجاح وحفظها في قاعدة البيانات! 🚀');
+                    this.reset(); // تفريغ الحقول بعد الإرسال الناجح
+                } else {
+                    alert('حدث خطأ أثناء الإرسال: ' + (data.message || 'يرجى المحاولة لاحقاً'));
+                }
+            } catch (err) {
+                console.error('خطأ في الاتصال بالسيرفر:', err);
+                alert('تعذر الاتصال بالسيرفر. (تذكر أن السيرفر المجاني على Render قد يستغرق 50 ثانية للاستيقاظ أول مرة)');
+            }
+        });
+    }
+});
