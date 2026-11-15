@@ -1,277 +1,131 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarek.Dev | طارق عابد</title>
-    <link rel="icon" type="image/jpeg" href="profile.jpg">
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TAREKKORSHED"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-TAREKKORSHED');
-    </script>
-
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8236586351473750" crossorigin="anonymous"></script>
-    
-    <!-- Schema.org Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://tarekkorshed.com/#website",
-          "url": "https://tarekkorshed.com/",
-          "name": "Tarek.Dev | طارق عابد",
-          "description": "موقع شخصي يعرض المشاريع البرمجية وتطوير واجهات الويب والتشطيبات بفرنسا.",
-          "inLanguage": ["ar", "en", "fr", "de", "es"]
-        },
-        {
-          "@type": "Person",
-          "@id": "https://tarekkorshed.com/#person",
-          "name": "Tarek Abed",
-          "alternateName": "طارق عابد",
-          "url": "https://tarekkorshed.com/",
-          "jobTitle": "Front-end Developer & Professional Craftsman",
-          "description": "مطور واجهات أمامية وصنايعي معلم مقيم في فرنسا.",
-          "email": "abedtareq364@gmail.com",
-          "address": {
-            "@type" 95100",
-            "addressCountry": "France"
-          },
-          "sameAs": [
-            "https://www.linkedin.com/in/tareq-abed-1570572a4/",
-            "https://malt.fr/profile/tareqabed",
-            "https://github.com/abedtareq364-cmyk",
-            "https://www.facebook.com/share/1GqiMbLH6w/",
-            "https://www.instagram.com/tarikkhorshed"
-          ]
-        }
-      ]
-    }
-    </script>
-
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>طارق عابد | مطوّر واجهات أمامية</title>
+  <meta name="description" content="طارق عابد: مطوّر واجهات أمامية. مشاريع ويب ومقالات تقنية عن الكود النظيف والأداء والأمان وإتاحة الويب.">
+  <link rel="canonical" href="https://tarekkorshed.com/">
+  <meta property="og:title" content="طارق عابد | مطوّر واجهات أمامية">
+  <meta property="og:description" content="مشاريع ويب ومقالات تقنية عن الكود النظيف والأداء والأمان.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tarekkorshed.com/">
+  <meta property="og:image" content="https://tarekkorshed.com/profile.jpg">
+  <meta name="theme-color" content="#0d1442">
+  <link rel="icon" href="profile.jpg">
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebSite","@id":"https://tarekkorshed.com/#website","url":"https://tarekkorshed.com/","name":"Tarek.Dev","inLanguage":["ar","fr","en"]},
+    {"@type":"Person","@id":"https://tarekkorshed.com/#person","name":"Tarek Abed","alternateName":"طارق عابد","url":"https://tarekkorshed.com/","jobTitle":"Front-end Developer",
+     "sameAs":["https://www.linkedin.com/in/tareq-abed-1570572a4/","https://malt.fr/profile/tareqabed","https://github.com/abedtareq364-cmyk","https://www.facebook.com/share/1GqiMbLH6w/","https://www.instagram.com/tarikkhorshed"]}
+  ]}
+  </script>
 </head>
-<body>
+<body data-ads="true">
+  <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
 
-    <!-- شريط التنقل العلوي (نظيف ومرتب) -->
-    <header class="navbar">
-        <div class="logo animated-logo">
-            <i class="fa-solid fa-code"></i> 
-            <span>Tarek<span class="logo-dot">.Dev</span></span>
-        </div>
-        <nav class="nav-links">
-            <a href="index.html" data-i18n="nav_home">الرئيسية</a>
-            <a href="about.html" data-i18n="nav_about">من نحن</a>
-            <a href="#blog" data-i18n="nav_blog">المدونة</a>
-            <a href="#experiments" data-i18n="nav_projects">المشاريع</a>
-            <a href="#contact" data-i18n="nav_contact">اتصل بنا</a>
-        </nav>
-        <div class="nav-controls">
-            <select id="langSelect" class="control-select" title="اختر اللغة">
-                <option value="ar">العربية (AR)</option>
-                <option value="fr">Français (FR)</option>
-                <option value="en">English (EN)</option>
-                <option value="de">Deutsch (DE)</option>
-                <option value="es">Español (ES)</option>
-            </select>
-            <button id="themeToggle" class="control-btn" title="تغيير الوضع"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
-        </div>
-    </header>
-
-    <!-- القسم الرئيسي (Hero) -->
-    <section id="home" class="hero-section">
-        <div class="hero-content">
-            <div class="avatar-container">
-                <img src="profile.jpg" alt="Tarek Abed" class="profile-avatar animated-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'">
-            </div>
-            <h1 data-i18n="hero_title">طارق عابد</h1>
-            <p data-i18n="hero_desc">مطور واجهات أمامية وصنايعي معلم متخصص في Peinture و Plaquiste و Carrelage في فرنسا.</p>
-            <div class="hero-btns">
-                <a href="#consultation" class="btn primary" data-i18n="btn_consult">استشارة مجانية</a>
-                <a href="#estimator" class="btn secondary" data-i18n="btn_estimator_btn">حاسبة الأسعار</a>
-            </div>
-        </div>
-        <!-- الموجة المتحركة -->
-        <div class="wave-container">
-            <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                    <use href="#gentle-wave" x="48" y="0" fill="rgba(59, 130, 246, 0.7)" />
-                    <use href="#gentle-wave" x="48" y="3" fill="rgba(59, 130, 246, 0.5)" />
-                    <use href="#gentle-wave" x="48" y="5" fill="rgba(59, 130, 246, 0.3)" />
-                    <use href="#gentle-wave" x="48" y="7" fill="var(--bg-color)" />
-                </g>
-            </svg>
-        </div>
-    </section>
-
-    <!-- قسم الاستشارة المجانية -->
-    <section id="consultation" class="section">
-        <h2 data-i18n="consult_title">طلب استشارة مجانية</h2>
-        <div class="about-card">
-            <p>لدي استفسار برمجي أو فني حول التشطيبات (Plaquiste, Peinture, Carrelage) في فرنسا؟ تواصل معي مباشرة.</p>
-            <form class="contact-form" style="margin-top: 20px;" onsubmit="event.preventDefault(); alert('تم إرسال طلب الاستشارة بنجاح!');">
-                <input type="text" placeholder="اسمك الكريم" required>
-                <input type="text" placeholder="رقم الهاتف أو الواتساب" required>
-                <textarea placeholder="اكتب تفاصيل استشارتك..." rows="3" required></textarea>
-                <button type="submit" class="btn primary" data-i18n="consult_send">إرسال الاستشارة</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- حاسبة الأسعار التقديرية -->
-    <section id="estimator" class="section">
-        <h2 data-i18n="calc_heading">حاسبة الأسعار التقديرية</h2>
-        <div class="tools-grid">
-            <div class="tool-box">
-                <h3 data-i18n="calc_service_type">اختر الخدمة أو الصنعة</h3>
-                <select id="serviceType" class="control-select" style="width:100%; margin-bottom:15px; padding:10px;" onchange="calculateEstimate()">
-                    <option value="web">تطوير موقع ويب (صفحة/موقع)</option>
-                    <option value="app">تطوير تطبيق موبايل / ويب</option>
-                    <option value="placo">تركيب بلاكو / جبس بورد (بالمتر المربع m²)</option>
-                    <option value="peinture">دهانات Peinture (بالمتر المربع m²)</option>
-                    <option value="carrelage">تركيب بلاط Carrelage (بالمتر المربع m²)</option>
-                </select>
-                <div style="margin-bottom: 5px; font-weight: bold;">العدد ( أمتار m²):</div>
-                <input type="number" id="serviceQty" value="10" min="1" style="width:100%; padding:10px; margin-bottom:15px; background:var(--bg-color); border:1px solid var(--border-color); color:var(--text-color); border-radius:6px;" oninput="calculateEstimate()">
-                <button class="btn primary" style="width:100%;" onclick="calculateEstimate()">احسب التكلفة</button>
-                <h3 id="estimateResult" style="margin-top: 20px; color: var(--gold);">التكلفة التقديرية: -- يورو (€)</h3>
-            </div>
-        </div>
-    </section>
-
-    <!-- دليل المشاكل الفنية وحلولها -->
-    <section id="troubleshooter" class="section">
-        <h2 data-i18n="trouble_title">دليل المشاكل الفنية وحلولها (برمجة وحرف)</h2>
-        <div class="grid-container">
-            <div class="card">
-                <h3>مشاكل الأكواد وتصميم الويب</h3>
-                <p><b>المشكلة:</b> عدم تجاوب الشاشات أو بطء التحميل.<br><b>الحل:</b> استخدام CSS Flexbox/Grid مع ضغط الصور وتحسين أداء الـ JavaScript.</p>
-            </div>
-            <div class="card">
-                <h3>مشاكل البلاكو (Plaquiste)</h3>
-                <p><b>المشكلة:</b> ظهور تشققات في الفواصل.<br><b>الحل:</b> استخدام شريط التسليح (Bande à joint) مع معجون عالي الجودة وصنفرة دقيقة.</p>
-            </div>
-            <div class="card">
-                <h3>مشاكل الدهانات (Peinture)</h3>
-                <p><b>المشكلة:</b> تقشر الدهان أو ظهور عيوب.<br><b>الحل:</b> صنفرة الحائط، وضع طبقة Primer عازلة، ودهان وجهين بانتظام.</p>
-            </div>
-            <div class="card">
-                <h3>مشاكل البلاط (Carrelage)</h3>
-                <p><b>المشكلة:</b> تفاوت حواف البلاط (Désaffleurement).<br><b>الحل:</b> ضبط الميل واستخدام نظام التسوية (Cales de nivellement).</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- سوق الخدمات المصغرة -->
-    <section id="microservices" class="section">
-        <h2 data-i18n="services_title">خدمات مصغرة وأكواد جاهزة بأسعار رمزية</h2>
-        <div class="grid-container">
-            <div class="card">
-                <h3>قالب موقع شخصي متجاوب</h3>
-                <p>قالب HTML/CSS/JS متعدد اللغات مع دعم الوضع المظلم.</p>
-                <span style="color: var(--gold); font-weight: bold; display: block; margin-bottom: 15px;">15 €</span>
-                <a href="https://wa.me/33749408535?text=أرغب في شراء قالب الموقع" target="_blank" class="link-btn">اطلب الآن</a>
-            </div>
-            <div class="card">
-                <h3>إصلاح مشكلة برمجية عاجلة</h3>
-                <p>فحص كود موقعك وحل أخطاء JavaScript وتصميم الواجهات.</p>
-                <span style="color: var(--gold); font-weight: bold; display: block; margin-bottom: 15px;">20 €</span>
-                <a href="https://wa.me/33749408535?text=أرغب في إصلاح مشكلة برمجية" target="_blank" class="link-btn">اطلب الآن</a>
-            </div>
-            <div class="card">
-                <h3>استشارة حرفية لورشة عمل</h3>
-                <p>نصائح هندسية وحساب كميات المواد للبلاكو والبانتيرا والكارلاج.</p>
-                <span style="color: var(--gold); font-weight: bold; display: block; margin-bottom: 15px;">25 €</span>
-                <a href="https://wa.me/33749408535?text=أرغب في استشارة حرفية" target="_blank" class="link-btn">اطلب الآن</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم المدونة التقنية -->
-    <section id="blog" class="section">
-        <h2 data-i18n="blog_title">المدونة التقنية</h2>
-        <div class="grid-container">
-            <article class="card"><h3>Clean Code & JavaScript</h3><p>أفضل الممارسات لكتابة كود نظيف.</p><a href="blog/clean-code-js.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>CSS Grid & Flexbox</h3><p>إتقان تخطيطات الشاشات الحديثة.</p><a href="blog/css-grid-flexbox.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>CSS Responsive</h3><p>تصميم واجهات مرنة ومتجاوبة.</p><a href="blog/css-responsive.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Git & GitHub</h3><p>إدارة إصدارات المشروع باحترافية.</p><a href="blog/git-github-guide.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>JS Performance</h3><p>تحسين أداء وسرعة السكربتات.</p><a href="blog/javascript-performance.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Page Speed & SEO</h3><p>تصدر نتائج محركات البحث.</p><a href="blog/page-speed-seo.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Security Basics</h3><p>أساسيات حماية التطبيقات.</p><a href="blog/security-basics.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Web Accessibility</h3><p>معايير إتاحة الويب لكافة الفئات.</p><a href="blog/web-accessibility.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Hosting & Deployment</h3><p>استضافة ونشر مواقع الويب.</p><a href="blog/web-hosting-deployment.html" class="link-btn">اقرأ المقال</a></article>
-            <article class="card"><h3>Security Best Practices</h3><p>أفضل الممارسات الأمنية.</p><a href="blog/web-security-best-practices.html" class="link-btn">اقرأ المقال</a></article>
-        </div>
-    </section>
-
-    <!-- المشاريع والسيرفرات السحابية -->
-    <section id="experiments" class="section">
-        <h2 data-i18n="projects_title">المشاريع والسيرفرات السحابية</h2>
-        <div class="grid-container">
-            <div class="card"><h3>المحفظة الرقمية (Netlify)</h3><p>النسخة المنشورة على سحابة Netlify.</p><a href="https://tarek-portfoliu.netlify.app" target="_blank" class="link-btn">زيارة الموقع</a></div>
-            <div class="card"><h3>اللعبة التفاعلية (Vercel)</h3><p>تطبيق تفاعلي يختبر السرعة.</p><a href="https://tarek-game.vercel.app/" target="_blank" class="link-btn">تجربة اللعبة</a></div>
-            <div class="card"><h3>لوحة التحكم Backend</h3><p>نظام إدارة المحتوى السحابي.</p><a href="admin.html" target="_blank" class="link-btn">لوحة التحكم</a></div>
-        </div>
-    </section>
-
-    <!-- التواصل مع أيقونات السوشيال ميديا منظمة جنب بعض -->
-    <section id="contact" class="section">
-        <h2 data-i18n="contact_title">تواصل معي</h2>
-        <div class="contact-wrapper">
-            <div class="social-icons-row">
-                <a href="https://www.linkedin.com/in/tareq-abed-1570572a4/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://malt.fr/profile/tareqabed" target="_blank" title="Malt"><i class="fa-solid fa-briefcase"></i></a>
-                <a href="https://github.com/abedtareq364-cmyk" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://www.facebook.com/share/1GqiMbLH6w/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://www.instagram.com/tarikkhorshed" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="mailto:abedtareq364@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
-            </div>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال الرسالة بنجاح!');">
-                <input type="text" placeholder="اسمك الكريم" required>
-                <input type="email" placeholder="بريدك الإلكتروني" required>
-                <textarea placeholder="رسالتك..." rows="4" required></textarea>
-                <button type="submit" class="btn primary">إرسال الرسالة</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- زر الواتساب العائم مع الذبذبة الحية -->
-    <a href="https://wa.me/33749408535" class="floating-whatsapp" target="_blank" title="تواصل عبر الواتساب">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
-    <!-- بانر الكوكيز -->
-    <div id="cookieBanner" class="cookie-banner">
-        <p>نحن نستخدم ملفات تعريف الارتباط (Cookies) وإعلانات AdSense لتحسين تجربتك.</p>
-        <button onclick="acceptCookies()" class="btn primary small">موافق</button>
+  <header class="navbar">
+    <a class="logo" href="index.html"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Tarek<span class="logo-dot">.Dev</span></span></a>
+    <nav id="mainNav" class="nav-links">
+      <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+      <a href="about.html" data-i18n="nav_about">من أنا</a>
+      <a href="#projects" data-i18n="nav_projects">المشاريع</a>
+      <a href="#blog" data-i18n="nav_blog">المدونة</a>
+      <a href="#contact" data-i18n="nav_contact">تواصل</a>
+    </nav>
+    <div class="nav-controls">
+      <select id="langSelect" class="control-select" aria-label="Language">
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
+      <button id="themeToggle" class="control-btn" type="button" aria-label="تغيير الوضع"><i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i></button>
+      <button id="menuBtn" class="control-btn menu-btn" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="القائمة"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
     </div>
+  </header>
 
-    <!-- الفوتر الاحترافي (يضم الروابط بجوار الحقوق في الأسفل) -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="about.html">من نحن</a> | 
-                <a href="privacy.html">الخصوصية</a> | 
-                <a href="terms.html">الشروط</a> | 
-                <a href="disclaimer.html">إخلاء المسؤولية</a> | 
-                <a href="#consultation">استشارة مجانية</a> | 
-                <a href="#estimator">حاسبة الأسعار</a> | 
-                <a href="#troubleshooter">دليل الحلول</a>
-            </div>
-            <p>&copy; 2026 Tarek.Dev (tarekkorshed.com). جميع الحقوق محفوظة.</p>
+  <main id="main">
+    <section id="home" class="hero-section">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <h1 data-i18n="hero_title">طارق عابد</h1>
+          <p data-i18n="hero_desc">مطوّر واجهات أمامية. أبني مواقع سريعة ومتجاوبة، وأكتب عن البرمجة والأداء والأمان.</p>
+          <div class="hero-btns">
+            <a href="#blog" class="btn primary" data-i18n="btn_blog">المدونة</a>
+            <a href="#contact" class="btn secondary" data-i18n="btn_contact">تواصل معي</a>
+          </div>
         </div>
-    </footer>
+        <div class="avatar-star"><img src="profile.jpg" alt="طارق عابد" class="profile-avatar" width="320" height="320"></div>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="projects" class="section">
+      <h2 data-i18n="pj_title">المشاريع</h2>
+      <div class="grid-container">
+        <div class="card"><h3 data-i18n="pj1_h">المحفظة الرقمية (Netlify)</h3><p data-i18n="pj1_p">النسخة المنشورة على Netlify.</p><a class="link-btn" href="https://tarek-portfoliu.netlify.app" target="_blank" rel="noopener noreferrer" data-i18n="btn_visit">زيارة الموقع</a></div>
+        <div class="card"><h3 data-i18n="pj2_h">اللعبة التفاعلية (Vercel)</h3><p data-i18n="pj2_p">لعبة تختبر سرعة رد الفعل.</p><a class="link-btn" href="https://tarek-game.vercel.app/" target="_blank" rel="noopener noreferrer" data-i18n="btn_try">جرّب اللعبة</a></div>
+        <div class="card"><h3 data-i18n="pj3_h">الكود على GitHub</h3><p data-i18n="pj3_p">مستودعاتي البرمجية ومشاريعي.</p><a class="link-btn" href="https://github.com/abedtareq364-cmyk" target="_blank" rel="noopener noreferrer" data-i18n="btn_github">افتح GitHub</a></div>
+      </div>
+    </section>
+
+    <section id="blog" class="section">
+      <h2 data-i18n="blog_title">المدونة التقنية</h2>
+      <div class="grid-container">
+        <article class="card"><h3>Clean Code & JavaScript</h3><p data-i18n="b1">أفضل ممارسات كتابة كود نظيف.</p><a class="link-btn" href="blog/clean-code-js.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>CSS Grid & Flexbox</h3><p data-i18n="b2">إتقان تخطيطات الشاشات الحديثة.</p><a class="link-btn" href="blog/css-grid-flexbox.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>CSS Responsive</h3><p data-i18n="b3">تصميم واجهات مرنة ومتجاوبة.</p><a class="link-btn" href="blog/css-responsive.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Git & GitHub</h3><p data-i18n="b4">إدارة إصدارات المشروع باحتراف.</p><a class="link-btn" href="blog/git-github-guide.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>JS Performance</h3><p data-i18n="b5">تحسين أداء وسرعة السكربتات.</p><a class="link-btn" href="blog/javascript-performance.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Page Speed & SEO</h3><p data-i18n="b6">تحسين السرعة وظهور الموقع في البحث.</p><a class="link-btn" href="blog/page-speed-seo.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Security Basics</h3><p data-i18n="b7">أساسيات حماية التطبيقات.</p><a class="link-btn" href="blog/security-basics.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Web Accessibility</h3><p data-i18n="b8">معايير إتاحة الويب لكل الفئات.</p><a class="link-btn" href="blog/web-accessibility.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Hosting & Deployment</h3><p data-i18n="b9">استضافة ونشر مواقع الويب.</p><a class="link-btn" href="blog/web-hosting-deployment.html" data-i18n="btn_read">اقرأ المقال</a></article>
+        <article class="card"><h3>Security Best Practices</h3><p data-i18n="b10">أفضل الممارسات الأمنية.</p><a class="link-btn" href="blog/web-security-best-practices.html" data-i18n="btn_read">اقرأ المقال</a></article>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2 data-i18n="contact_title">تواصل معي</h2>
+      <div class="contact-wrapper">
+        <div class="social-icons-row">
+          <a href="https://www.linkedin.com/in/tareq-abed-1570572a4/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+          <a href="https://malt.fr/profile/tareqabed" target="_blank" rel="noopener noreferrer" aria-label="Malt"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></a>
+          <a href="https://github.com/abedtareq364-cmyk" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+          <a href="https://www.facebook.com/share/1GqiMbLH6w/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/tarikkhorshed" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="mailto:abedtareq364@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+        </div>
+        <form id="contactForm" class="contact-form" data-form="contact" novalidate>
+          <input type="text" id="name" name="name" autocomplete="name" required data-i18n-ph="ph_name" placeholder="اسمك الكريم" aria-label="الاسم">
+          <input type="email" id="email" name="email" autocomplete="email" required data-i18n-ph="ph_email" placeholder="بريدك الإلكتروني" aria-label="البريد">
+          <textarea id="message" name="message" rows="4" required data-i18n-ph="ph_message" placeholder="رسالتك..." aria-label="الرسالة"></textarea>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label class="consent"><input type="checkbox" name="consent" required>
+            <span><span data-i18n="consent_pre">أوافق على معالجة بياناتي للرد على رسالتي، حسب</span> <a href="privacy.html" data-i18n="consent_link">سياسة الخصوصية</a></span>
+          </label>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn primary" data-i18n="send_msg">إرسال الرسالة</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="about.html" data-i18n="f_about">من أنا</a>
+        <a href="privacy.html" data-i18n="f_privacy">الخصوصية</a>
+        <a href="terms.html" data-i18n="f_terms">الشروط</a>
+        <a href="disclaimer.html" data-i18n="f_disc">إخلاء المسؤولية</a>
+        <a href="#" id="cookieSettings" data-i18n="f_cookies">إعدادات الكوكيز</a>
+      </div>
+      <p data-i18n="f_rights">© 2026 Tarek.Dev (tarekkorshed.com). جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

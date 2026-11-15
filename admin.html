@@ -1,65 +1,125 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم الإدارية | Tarek.Dev</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    body { font-family: 'Cairo', sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
-    h1 { color: #38bdf8; font-size: 1.8rem; margin: 0; }
-    .back-btn { background: #334155; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; }
-    .msg-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-    .msg-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #94a3b8; }
-    .msg-name { font-weight: 700; color: #f8fafc; font-size: 1.1rem; }
-    .msg-body { font-size: 1rem; line-height: 1.6; color: #e2e8f0; }
-    .no-msg { text-align: center; color: #94a3b8; margin-top: 50px; font-size: 1.2rem; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>لوحة التحكم | Tarek.Dev</title>
+  <script>document.documentElement.setAttribute('data-theme','dark');</script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><i class="fa-solid fa-gauge-high"></i> لوحة تحكم رسائل العملاء</h1>
-      <a href="https://tarekkorshed.com" class="back-btn"><i class="fa-solid fa-arrow-right"></i> عودة للموقع</a>
-    </header>
+  <div class="admin-wrap">
+    <h1 style="margin-bottom:20px;">رسائل التواصل</h1>
 
-    <div id="messagesContainer">
-      <p style="text-align: center; color: #94a3b8;">جاري تحميل الرسائل...</p>
-    </div>
+    <form id="loginForm" class="tool-box" style="max-width:420px;margin-bottom:25px;">
+      <label for="token">رمز الدخول</label>
+      <input id="token" class="field" type="password" autocomplete="off" required>
+      <button class="btn primary" type="submit">دخول</button>
+    </form>
+
+    <div id="messagesContainer"></div>
   </div>
 
-<script>
-    async function fetchMessages() {
-      const container = document.getElementById('messagesContainer');
-      container.innerHTML = '<div class="no-msg">جاري تحميل الرسائل... ⏳</div>';
-      try {
-        const response = await fetch('https://tarek-portofolio-backend.onrender.com/api/messages');
-        const data = await response.json();
-        
-        if (data.success && data.messages.length > 0) {
-          container.innerHTML = '';
-          data.messages.forEach(msg => {
-            const date = msg.createdAt || msg.created_at;
-            container.innerHTML += `
-              <div class="msg-card">
-                <div class="msg-header">
-                  <span class="msg-name"><i class="fa-solid fa-user"></i> ${msg.name} (${msg.email})</span>
-                  <span><i class="fa-regular fa-clock"></i> ${new Date(date).toLocaleString('ar-EG')}</span>
-                </div>
-                <div class="msg-body">${msg.message}</div>
-              </div>
-            `;
-          });
-        } else {
-          container.innerHTML = '<div class="no-msg">لا توجد رسائل مسجلة حتى الآن 📭</div>';
-        }
-      } catch (err) {
-        console.error('خطأ في جلب الرسائل:', err);
-        container.innerHTML = '<div class="no-msg" style="color: #ef4444;">تعذر الاتصال بالسيرفر. السيرفر المجاني بياخد 50 ثانية عشان يصحى أول مرة، اعمل ريفريش.</div>';
+  <script>
+    (function () {
+      'use strict';
+      var API = 'https://tarek-portofolio-backend.onrender.com';
+      var token = '';               // في الذاكرة فقط، ويختفي بإغلاق الصفحة
+      var container = document.getElementById('messagesContainer');
+      var form = document.getElementById('loginForm');
+      var YEAR_MS = 365 * 24 * 3600 * 1000;
+
+      function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text !== undefined) e.textContent = text;
+        return e;
       }
-    }
-    fetchMessages();
-</script>
+      function note(text, color) {
+        container.replaceChildren();
+        var d = el('div', 'no-msg', text);
+        if (color) d.style.color = color;
+        container.appendChild(d);
+      }
+      function authFetch(path, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ Authorization: 'Bearer ' + token }, opts.headers || {});
+        return fetch(API + path, opts);
+      }
+
+      function renderCard(m, card) {
+        var d = new Date(m.created_at || m.createdAt);
+        var old = !isNaN(d) && (Date.now() - d.getTime() > YEAR_MS);
+
+        var head = el('div', 'msg-header');
+        head.appendChild(el('span', 'msg-name', String(m.name || '') + ' (' + String(m.email || '') + ')'));
+        head.appendChild(el('span', '', isNaN(d) ? '' : d.toLocaleString('ar-EG')));
+        card.appendChild(head);
+
+        card.appendChild(el('div', 'msg-body', String(m.message || '')));
+
+        var foot = el('div', '');
+        foot.style.cssText = 'display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap;';
+        if (old) {
+          var badge = el('span', '', 'أقدم من 12 شهراً: الأفضل حذفها');
+          badge.style.color = 'var(--gold-text)';
+          badge.style.fontWeight = '700';
+          foot.appendChild(badge);
+        }
+        var del = el('button', 'btn secondary small', 'حذف');
+        del.type = 'button';
+        del.addEventListener('click', function () {
+          if (!window.confirm('حذف هذه الرسالة نهائياً؟')) return;
+          del.disabled = true;
+          authFetch('/api/messages/' + encodeURIComponent(m._id), { method: 'DELETE' })
+            .then(function (res) {
+              if (res.status === 401) { note('انتهت الجلسة، ادخل الرمز من جديد.', '#ef4444'); return; }
+              return res.json().catch(function () { return {}; }).then(function (data) {
+                if (!res.ok || !data.success) throw new Error('fail');
+                card.remove();
+                if (!container.querySelector('.msg-card')) note('لا توجد رسائل');
+              });
+            })
+            .catch(function () { del.disabled = false; alert('تعذر الحذف، حاول مرة أخرى.'); });
+        });
+        foot.appendChild(del);
+        card.appendChild(foot);
+      }
+
+      function load() {
+        note('جاري التحميل... قد يستغرق حتى دقيقة إذا كان السيرفر نائماً.');
+        var ctrl = new AbortController();
+        var timer = setTimeout(function () { ctrl.abort(); }, 60000);
+        authFetch('/api/messages', { signal: ctrl.signal })
+          .then(function (res) {
+            if (res.status === 401) { token = ''; note('رمز غير صحيح', '#ef4444'); return null; }
+            if (!res.ok) throw new Error(String(res.status));
+            return res.json();
+          })
+          .then(function (data) {
+            if (!data) return;
+            var list = Array.isArray(data.messages) ? data.messages : [];
+            if (!data.success || !list.length) { note('لا توجد رسائل حتى الآن'); return; }
+            var frag = document.createDocumentFragment();
+            list.forEach(function (m) {
+              var card = el('div', 'msg-card');
+              renderCard(m, card);
+              frag.appendChild(card);
+            });
+            container.replaceChildren(frag);
+          })
+          .catch(function () { note('تعذر الاتصال. حاول مرة أخرى بعد قليل.', '#ef4444'); })
+          .then(function () { clearTimeout(timer); });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = document.getElementById('token');
+        token = input.value;
+        input.value = '';
+        if (token) load();
+      });
+    })();
+  </script>
+</body>

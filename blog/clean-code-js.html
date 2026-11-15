@@ -1,375 +1,131 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>كتابة كود نظيف في JavaScript: أساليب وممارسات محترفة | مدونة طارق خورشيد</title>
-  <meta name="description" content="تعلم كيفية كتابة كود JavaScript نظيف وقابل للقراءة والصيانة وفق قواعد Clean Code العالمية مع أمثلة عملية للمبرمجين." />
-  <meta name="keywords" content="Clean Code, JavaScript, جافاسكريبت, برمجة نظيفة, تطوير الويب, طارق خورشيد" />
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTX94ZRQ8N"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-FTX94ZRQ8N');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>كتابة كود نظيف في JavaScript: ممارسات عملية | Tarek.Dev</title>
+  <meta name="description" content="كيف تكتب كود JavaScript نظيفاً وسهل القراءة والصيانة: أسماء معبّرة، دوال بمسؤولية واحدة، وشروط حارسة، مع أمثلة عملية.">
+  <link rel="canonical" href="https://tarekkorshed.com/blog/clean-code-js.html">
+  <meta property="og:title" content="كتابة كود نظيف في JavaScript: ممارسات عملية">
+  <meta property="og:description" content="أسماء معبّرة، دوال بمسؤولية واحدة، وشروط حارسة مع أمثلة عملية.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://tarekkorshed.com/blog/clean-code-js.html">
+  <link rel="icon" href="../profile.jpg">
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "كتابة كود نظيف في JavaScript: ممارسات عملية",
+    "inLanguage": "ar",
+    "datePublished": "2026-11-04",
+    "mainEntityOfPage": "https://tarekkorshed.com/blog/clean-code-js.html",
+    "author": { "@type": "Person", "name": "Tarek Abed", "alternateName": "طارق عابد", "url": "https://tarekkorshed.com/" }
+  }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8236586351473750" crossorigin="anonymous"></script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <style>
-    body { font-family: 'Cairo', sans-serif; background-color: #0b1329; color: #f8fafc; line-height: 1.8; padding: 20px; margin: 0; }
-    .article-container { max-width: 800px; margin: 40px auto; background: #1e293b; padding: 35px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    
-    .article-header-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; }
-    h1 { color: #38bdf8; font-size: 2rem; margin: 0; font-weight: 900; }
-    
-    h2 { color: #7dd3fc; font-size: 1.35rem; margin-top: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; font-weight: 700; }
-    p { color: #cbd5e1; font-size: 1.05rem; margin-bottom: 15px; }
-    ul { margin-right: 20px; color: #cbd5e1; margin-bottom: 20px; }
-    li { margin-bottom: 10px; }
-    code { background: #0f172a; color: #38bdf8; padding: 2px 8px; border-radius: 6px; font-family: monospace; font-size: 0.95rem; }
-    pre { background: #0f172a; padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid rgba(56, 189, 248, 0.15); margin: 15px 0; }
-    pre code { background: none; padding: 0; color: #38bdf8; }
-    .back-btn { display: inline-block; margin-top: 30px; color: #0f172a; background: #38bdf8; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s; }
-    .back-btn:hover { background: #0284c7; color: #fff; }
-  </style>
 </head>
 <body>
-  <div class="article-container">
-    
-    <!-- العنوان الرئيسي وبجواره قائمة الثلاث نقاط -->
-    <div class="article-header-flex">
-        <h1>كتابة كود نظيف في JavaScript: أساليب وممارسات محترفة</h1>
-        
-        <!-- زر القائمة (ثلاث نقاط) -->
-        <div class="article-menu-container" style="position: relative; display: inline-block;">
-            <button onclick="toggleArticleMenu(event)" style="background: transparent; border: none; color: #cbd5e1; font-size: 1.8rem; cursor: pointer; padding: 0 5px; line-height: 1; transition: color 0.2s;" title="خيارات المقال">⋮</button>
-            
-            <!-- القائمة المنسدلة -->
-            <div id="article-dropdown" style="display: none; position: absolute; left: 0; top: 110%; background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 100; min-width: 170px; overflow: hidden; font-family: 'Cairo', sans-serif;">
-                <a href="#" onclick="saveArticle(); return false;" style="display: block; padding: 12px 16px; color: #f8fafc; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;">💾 حفظ المقال</a>
-                <a href="#" id="edit-article-btn" onclick="editArticle(); return false;" style="display: none; padding: 12px 16px; color: #38bdf8; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: bold;">✏️ تعديل المقال</a>
-                <a href="#" onclick="shareArticle(); return false;" style="display: block; padding: 12px 16px; color: #f8fafc; text-decoration: none; font-size: 0.9rem; transition: background 0.2s;">🔗 مشاركة المقال</a>
-            </div>
-        </div>
+  <header class="navbar">
+    <a class="logo" href="../index.html"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Tarek<span class="logo-dot">.Dev</span></span></a>
+    <div class="nav-controls">
+      <a class="btn secondary small" href="../index.html#blog">المدونة</a>
+      <button id="themeToggle" class="control-btn" type="button" aria-label="تغيير الوضع"><i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
-    
-    <!-- حاوية المقال التي تقبل الطي والفتح -->
-    <div class="article-content-wrapper" style="position: relative;">
-        <div id="article-body" style="max-height: 320px; overflow: hidden; position: relative; transition: max-height 0.6s ease;">
-            
-            <p>مفهوم <strong>Clean Code</strong> (الكود النظيف) ليس مجرد تنسيق شكلي أو مسافات مرتبة داخل ملفات المشروع، بل هو فلسفة تطوير متكاملة تهدف لتسهيل قراءة البرمجيات، صيانتها، وتطويرها مستقبلاً بواسطة المبرمج نفسه أو فريق العمل. عندما تكتب كود نظيف في لغة JavaScript، فإنك توفر ساعات طويلة من تصحيح الأخطاء (Debugging) وتبني أساساً برمجياً قوياً وقابلاً للتوسع.</p>
+  </header>
 
-            <h2>1. دلالة الأسماء: اختيار أسماء متفرّدة ومعبّرة</h2>
-            <p>واحدة من أهم قواعد الكود النظيف هي اختيار أسماء المتغيرات، الدوال، والكلاسات بوضوح تام يعكس الغرض منها دون الحاجة لكتابة تعليقات طويلة تشرحها. تجنب تماماً استخدام الاختصارات المبهمة أو الحروف المفردة مثل <code>d</code> أو <code>temp</code> إلا في أضيق حدود الحلقات التكرارية البسيطة.</p>
-            <p><strong>مثال سيء:</strong></p>
-            <pre><code>const d = new Date(); // ماذا تعنى d؟</code></pre>
-            <p><strong>مثال احترافي:</strong></p>
-            <pre><code>const currentDate = new Date();</code></pre>
+  <main class="article" data-article="clean-code">
+    <h1>كتابة كود نظيف في JavaScript: ممارسات عملية</h1>
+    <p class="article-meta">بقلم طارق عابد · <time datetime="YYYY-MM-DD">[التاريخ]</time></p>
 
-            <h2>2. مبدأ المسؤولية الواحدة للدوال (SRP)</h2>
-            <p>يجب أن تؤدي كل دالة وظيفة واحدة محددة فقط وبشكل كامل. إذا كانت الدالة تقوم بحساب المجموع، وتحديث قاعدة البيانات، وإرسال بريد إلكتروني في نفس الوقت، فهذا يعني أنك خالفت مبدأ المسؤولية الواحدة. تقسيم الدوال إلى مهام صغيرة ومنفصلة يسهل اختبارها وإعادة استخدامها في أماكن مختلفة من المشروع.</p>
+    <p>مفهوم <strong>Clean Code</strong> (الكود النظيف) ليس مجرد تنسيق شكلي أو مسافات مرتبة، بل أسلوب في الكتابة هدفه أن يُقرأ الكود بسهولة، ويُصان ويُطوَّر لاحقاً، سواء بواسطتك أو بواسطة فريقك. وعندما تكتب كوداً نظيفاً في JavaScript توفّر ساعات طويلة من تصحيح الأخطاء (Debugging) وتبني أساساً أسهل في التوسّع.</p>
 
-            <h2>3. تجنب التداخل العميق باستخدام الـ Guard Clauses</h2>
-            <p>التداخل المفرط لجمل الشرط (Nested If Statements) يجعل الكود شبيهاً بـ "المتاهة" ويصعب تتبعه. الحل الأمثل هو استخدام الشروط الحارسة (Guard Clauses) أو الخروج المبكر (Early Return) للتحقق من الأخطاء أو الحالات الاستثنائية في بداية الدالة.</p>
-            <p><strong>مثال احترافي:</strong></p>
-            <pre><code>function processUser(user) {
-    if (!user || !user.isActive) return;
-    // متابعة تنفيذ العمليات الأساسية للمستخدم النشط
+    <h2>1. أسماء معبّرة</h2>
+    <p>اختر أسماء المتغيرات والدوال بحيث تشرح غرضها دون تعليق. تجنّب الاختصارات المبهمة والحروف المفردة إلا في الحلقات التكرارية البسيطة.</p>
+    <p><strong>مثال سيئ:</strong></p>
+    <pre><code>const d = new Date(); // ماذا تعني d؟</code></pre>
+    <p><strong>مثال أفضل:</strong></p>
+    <pre><code>const currentDate = new Date();</code></pre>
+
+    <h2>2. مبدأ المسؤولية الواحدة للدوال (SRP)</h2>
+    <p>يجب أن تؤدي كل دالة مهمة واحدة محددة. إذا كانت الدالة تحسب المجموع وتحدّث قاعدة البيانات وترسل بريداً في آنٍ واحد، فقد خالفتَ المبدأ. تقسيمها إلى دوال صغيرة يسهّل اختبارها وإعادة استخدامها.</p>
+    <pre><code>function handleOrder(order) {
+  const total = calculateTotal(order);
+  saveOrder(order, total);
+  sendConfirmationEmail(order);
+}</code></pre>
+    <p>كل دالة مساعدة هنا لها مهمة واحدة، والدالة الرئيسية تنسّق بينها فقط.</p>
+
+    <h2>3. تجنّب التداخل العميق بالشروط الحارسة (Guard Clauses)</h2>
+    <p>تداخل جمل <code>if</code> يجعل الكود أشبه بالمتاهة. الحل هو التحقق من الحالات الاستثنائية في بداية الدالة والخروج المبكر (Early Return).</p>
+    <p><strong>قبل:</strong></p>
+    <pre><code>function processUser(user) {
+  if (user) {
+    if (user.isActive) {
+      // العمليات الأساسية هنا، داخل مستويين من التداخل
+    }
+  }
+}</code></pre>
+    <p><strong>بعد:</strong></p>
+    <pre><code>function processUser(user) {
+  if (!user || !user.isActive) return;
+  // العمليات الأساسية هنا، بدون تداخل
 }</code></pre>
 
-            <h2>4. الاعتماد على الكود الذي يشرح نفسه</h2>
-            <p>الكود الجيد هو الذي يقرأ وكأنه قصة واضحة باللغة الإنجليزية البسيطة. التعليقات يجب أن تقتصر على شرح <em>السبب</em> وراء كتابة الكود بطريقة معينة (لماذا اتخذت هذا القرار البرمجي؟) وليس <em>ماذا</em> يفعل الكود، لأن الكود نفسه يجب أن يوضح ذلك بجلاء.</p>
+    <h2>4. كود يشرح نفسه</h2>
+    <p>الكود الجيد يُقرأ بوضوح. اقتصر في التعليقات على شرح <em>السبب</em> (لماذا اتخذت هذا القرار) لا <em>الماذا</em> (ماذا يفعل السطر)، فالكود نفسه ينبغي أن يوضّح ذلك.</p>
 
-            <h2>خاتمة</h2>
-            <p>إن الالتزام بمعايير الكود النظيف في JavaScript يرفع من جودة موقعك ومشاريعك البرمجية، ويجعل صيانة الأكواد وتطويرها ممتعة وخالية من التعقيد. طبق هذه الممارسات تدريجيّاً في مشاريعك القادمة وستلاحظ الفارق الكبير في سرعة التطوير ونظافة الهيكل.</p>
+    <h2>خاتمة</h2>
+    <p>الالتزام بهذه الممارسات يرفع جودة مشاريعك ويجعل صيانتها أسهل. طبّقها تدريجياً في مشاريعك القادمة وستلاحظ الفرق في سرعة التطوير ووضوح الهيكل.</p>
 
+    <div class="interaction-bar">
+      <button id="likeBtn" class="plain-btn" type="button" aria-pressed="false">
+        <span id="heartIcon" class="heart" aria-hidden="true">♡</span>
+        <span><span id="likeCount">0</span> إعجاب</span>
+      </button>
+      <button id="commentsBtn" class="plain-btn" type="button"><span aria-hidden="true">💬</span> التعليقات</button>
+      <button id="shareBtn" class="btn primary small" type="button"><span aria-hidden="true">🔗</span> مشاركة</button>
+    </div>
+    <p id="shareStatus" class="form-status" role="status" aria-live="polite"></p>
+
+    <section id="comments" class="comments-section">
+      <h3>التعليقات والتقييم</h3>
+      <form id="commentForm" class="comment-form" novalidate>
+        <input id="commenterName" type="text" maxlength="60" autocomplete="nickname" placeholder="اسمك (اختياري)" aria-label="الاسم">
+        <div class="stars" role="radiogroup" aria-label="تقييمك للمقال">
+          <span class="muted small" style="margin-inline-end:8px;">تقييمك:</span>
+          <button type="button" class="star-btn" data-v="1" role="radio" aria-checked="false" aria-label="نجمة واحدة">★</button>
+          <button type="button" class="star-btn" data-v="2" role="radio" aria-checked="false" aria-label="نجمتان">★</button>
+          <button type="button" class="star-btn" data-v="3" role="radio" aria-checked="false" aria-label="3 نجوم">★</button>
+          <button type="button" class="star-btn" data-v="4" role="radio" aria-checked="false" aria-label="4 نجوم">★</button>
+          <button type="button" class="star-btn" data-v="5" role="radio" aria-checked="false" aria-label="5 نجوم">★</button>
         </div>
-        
-        <!-- تأثير التدرج اللوني للاختفاء التدريجي -->
-        <div id="fade-overlay" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; background: linear-gradient(transparent, #1e293b); pointer-events: none;"></div>
+        <textarea id="commentText" rows="3" maxlength="1000" placeholder="اكتب تعليقك..." aria-label="التعليق" required></textarea>
+        <p class="muted small">التعليقات عامة وتظهر لكل الزوار. لا تكتب بيانات شخصية. التفاصيل في <a href="../privacy.html">سياسة الخصوصية</a>.</p>
+        <p id="commentStatus" class="form-status" role="status" aria-live="polite"></p>
+        <button id="commentSubmit" class="btn primary" type="submit" style="align-self:flex-start;">نشر التعليق</button>
+      </form>
+      <div id="commentsList"><p class="muted">جاري تحميل التعليقات...</p></div>
+    </section>
+
+    <p style="margin-top:28px;"><a class="back-link" href="../index.html#blog">← العودة إلى المدونة</a></p>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="../about.html">من أنا</a>
+        <a href="../privacy.html">الخصوصية</a>
+        <a href="../terms.html">الشروط</a>
+        <a href="../disclaimer.html">إخلاء المسؤولية</a>
+        <a href="#" id="cookieSettings">إعدادات الكوكيز</a>
+      </div>
+      <p>© 2026 Tarek.Dev (tarekkorshed.com). جميع الحقوق محفوظة.</p>
     </div>
+  </footer>
 
-    <!-- زر "عرض المزيد" -->
-    <div style="text-align: center; margin: 25px 0;">
-        <button onclick="toggleReadMore()" id="read-more-btn" style="background: #38bdf8; color: #0f172a; border: none; padding: 12px 30px; border-radius: 25px; font-weight: bold; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 1rem; transition: background 0.3s; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);">
-            عرض المزيد من المقال 🔽
-        </button>
-    </div>
-
-    <!-- شريط التفاعل الاحترافي (لايك حقيقي بالقلب الفارغ والممتلئ، تعليقات، مشاركة) -->
-    <div class="interaction-bar" style="display: flex; align-items: center; justify-content: space-around; background: #0f172a; padding: 15px 20px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.2); margin-top: 30px; flex-wrap: wrap; gap: 15px;">
-        
-        <!-- زر الإعجاب الحقيقي (قلب) -->
-        <button onclick="toggleLike()" id="heart-btn" style="background: transparent; border: none; color: #cbd5e1; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: bold; transition: 0.3s;">
-            <span id="heart-icon" style="font-size: 1.4rem; transition: transform 0.2s;">♡</span>
-            <span id="like-count">18</span> إعجاب
-        </button>
-
-        <!-- زر الانتقال للتعليقات -->
-        <button onclick="scrollToComments()" style="background: transparent; border: none; color: #cbd5e1; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: bold; transition: color 0.3s;">
-            <span style="font-size: 1.2rem;">💬</span> تعليقات
-        </button>
-
-        <!-- زر المشاركة على وسائل التواصل -->
-        <button onclick="shareArticle()" style="background: #38bdf8; color: #0f172a; border: none; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: background 0.3s;">
-            <span style="font-size: 1.1rem;">🔗</span> مشاركة المقال
-        </button>
-    </div>
-
-    <!-- قسم التعليقات والتقييمات -->
-    <div class="comments-section" style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
-        <h3 style="color: #7dd3fc; font-size: 1.3rem; margin-bottom: 20px; font-weight: 700;">التعليقات والتقييم العام</h3>
-        
-        <!-- نموذج كتابة تعليق مع الاسم والنجوم -->
-        <div class="comment-form" style="margin-bottom: 25px; display: flex; flex-direction: column; gap: 12px; background: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.15);">
-            <input type="text" id="commenter-name" placeholder="اكتب اسمك الكريم هنا (اختياري)..." style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); color: #f8fafc; padding: 12px 15px; border-radius: 8px; font-family: 'Cairo', sans-serif; outline: none;" />
-            
-            <!-- نظام النجوم التفاعلي -->
-            <div style="display: flex; align-items: center; gap: 5px;">
-                <span style="color: #cbd5e1; font-size: 0.95rem; margin-left: 10px;">تقييمك للمقال:</span>
-                <div id="star-rating" style="cursor: pointer; font-size: 1.5rem; color: #fbbf24;">
-                    <span onclick="setRating(1)" class="star">★</span>
-                    <span onclick="setRating(2)" class="star">★</span>
-                    <span onclick="setRating(3)" class="star">★</span>
-                    <span onclick="setRating(4)" class="star">★</span>
-                    <span onclick="setRating(5)" class="star" style="color: #fbbf24;">★</span>
-                </div>
-            </div>
-
-            <textarea id="comment-text" placeholder="اكتب تعليقك أو رأيك باحترافية..." rows="3" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); color: #f8fafc; padding: 12px 15px; border-radius: 8px; font-family: 'Cairo', sans-serif; resize: vertical; outline: none;"></textarea>
-            <button onclick="addComment()" style="background: #38bdf8; color: #0f172a; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Cairo', sans-serif; align-self: flex-start; transition: background 0.3s;">نشر التعليق</button>
-        </div>
-
-        <!-- قائمة التعليقات -->
-        <div id="comments-list" style="display: flex; flex-direction: column; gap: 15px;">
-            <!-- سيتم جلب التعليقات من MongoDB وتعبئتها هنا ديناميكياً -->
-        </div>
-    </div>
-
-    <a href="../index.html#blog" class="back-btn">← العودة للمدونة والمقالات</a>
-  </div>
-
-  <script>
-    const BACKEND_URL = "https://tarek-portofolio-backend.onrender.com"; // رابط سيرفر Render الخاص بك
-    let currentRating = 5;
-    let isLiked = false;
-
-    // تحديد التقييم بالنجوم
-    function setRating(rating) {
-        currentRating = rating;
-        const stars = document.querySelectorAll('#star-rating .star');
-        stars.forEach((star, index) => {
-            star.style.color = index < rating ? '#fbbf24' : '#475569';
-        });
-    }
-
-    // جلب التعليقات والإعجابات الحقيقية فور تحميل الصفحة
-    document.addEventListener("DOMContentLoaded", () => {
-        fetchComments();
-        fetchLikes();
-    });
-
-    async function fetchComments() {
-        const commentsList = document.getElementById('comments-list');
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/comments?article=clean-code`);
-            const comments = await response.json();
-            
-            commentsList.innerHTML = '';
-            if (Array.isArray(comments)) {
-                comments.forEach(c => {
-                    appendCommentToDOM(c.name, c.rating, c.text);
-                });
-            }
-        } catch (error) {
-            console.error("خطأ في جلب التعليقات:", error);
-        }
-    }
-
-    async function fetchLikes() {
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/likes?article=clean-code`);
-            const data = await response.json();
-            if (data.success) {
-                document.getElementById('like-count').innerText = data.count;
-            }
-            if (localStorage.getItem('liked_clean-code') === 'true') {
-                isLiked = true;
-                document.getElementById('heart-icon').innerText = '❤️';
-            }
-        } catch (error) {
-            console.error("خطأ في جلب الإعجابات:", error);
-        }
-    }
-// تفعيل وضع المدير تلقائياً عبر الرابط لتجنب مشاكل الكيبورد
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('admin') === 'true') {
-    localStorage.setItem('isMyBlogAdmin', 'true');
-    alert('تم تفعيل وضع المدير بنجاح يا بشمهندس! 🚀');
-}
-    // إرسال وحفظ التعليق في سيرفر Render
-    async function addComment() {
-        const nameInput = document.getElementById('commenter-name');
-        const textInput = document.getElementById('comment-text');
-
-        if (!textInput.value.trim()) {
-            alert('من فضلك اكتب نص التعليق قبل النشر.');
-            return;
-        }
-
-        const newComment = {
-            articleId: "clean-code",
-            name: nameInput.value.trim(),
-            rating: currentRating,
-            text: textInput.value.trim()
-        };
-
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/comments`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newComment)
-            });
-
-            if (response.ok) {
-                appendCommentToDOM(newComment.name, newComment.rating, newComment.text);
-                textInput.value = '';
-                nameInput.value = '';
-            } else {
-                alert('حدث خطأ أثناء حفظ التعليق، حاول مرة أخرى.');
-            }
-        } catch (error) {
-            console.error("خطأ في الاتصال بالسيرفر:", error);
-        }
-    }
-
-    // رسم التعليق على واجهة الموقع
-    function appendCommentToDOM(name, rating, text) {
-        const commentsList = document.getElementById('comments-list');
-        const commentDiv = document.createElement('div');
-        commentDiv.className = 'comment-item';
-        commentDiv.style.cssText = 'background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);';
-        
-        let starsHtml = '★'.repeat(rating || 5) + '☆'.repeat(5 - (rating || 5));
-        let displayName = (name && name.trim() !== '') ? escapeHtml(name) : 'زائر';
-
-        commentDiv.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                <strong style="color: #38bdf8;">${displayName}</strong>
-                <span style="color: #fbbf24; font-size: 1rem;" title="تقييم: ${rating} من 5">${starsHtml}</span>
-            </div>
-            <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">${escapeHtml(text)}</p>
-        `;
-
-        commentsList.prepend(commentDiv);
-    }
-
-    // زر الإعجاب الحقيقي المربوط بـ MongoDB والقلب الأحمر
-    async function toggleLike() {
-        isLiked = !isLiked;
-        const heartIcon = document.getElementById('heart-icon');
-        const likeCountSpan = document.getElementById('like-count');
-        
-        if (isLiked) {
-            heartIcon.innerText = '❤️';
-            heartIcon.style.transform = 'scale(1.3)';
-            localStorage.setItem('liked_clean-code', 'true');
-            setTimeout(() => { heartIcon.style.transform = 'scale(1)'; }, 200);
-        } else {
-            heartIcon.innerText = '♡';
-            localStorage.removeItem('liked_clean-code');
-        }
-
-        try {
-            const action = isLiked ? 'like' : 'unlike';
-            const response = await fetch(`${BACKEND_URL}/api/likes`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ articleId: 'clean-code', action: action })
-            });
-            const data = await response.json();
-            if (data.success) {
-                likeCountSpan.innerText = data.count;
-            }
-        } catch (error) {
-            console.error("خطأ في تحديث الإعجاب:", error);
-        }
-    }
-
-    // قائمة الثلاث نقاط (خيارات المقال)
-    function toggleArticleMenu(event) {
-        event.stopPropagation();
-        const dropdown = document.getElementById('article-dropdown');
-        const editBtn = document.getElementById('edit-article-btn');
-        
-        // التحقق مما إذا كنت أنت المالك من على متصفحك الشخصي
-        if (localStorage.getItem('isMyBlogAdmin') === 'true') {
-            editBtn.style.display = 'block'; // تظهر لك وحدك
-        } else {
-            editBtn.style.display = 'none';  // تختفي عن باقي الزوار تماماً
-        }
-
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // إغلاق القائمة عند النقر في أي مكان خارجها
-    window.addEventListener('click', () => {
-        const dropdown = document.getElementById('article-dropdown');
-        if (dropdown) dropdown.style.display = 'none';
-    });
-
-    function saveArticle() {
-        alert('تم حفظ المقال في المفضلة بنجاح! 🎯');
-    }
-
-    function editArticle() {
-        alert('أهلاً بك يا بشمهندس طارق! جاري فتح لوحة تعديل المقال...');
-    }
-
-    // نظام "عرض المزيد" / "عرض أقل" للمقال
-    let isExpanded = false;
-    function toggleReadMore() {
-        const articleBody = document.getElementById('article-body');
-        const fadeOverlay = document.getElementById('fade-overlay');
-        const btn = document.getElementById('read-more-btn');
-
-        if (!isExpanded) {
-            articleBody.style.maxHeight = 'none';
-            fadeOverlay.style.display = 'none';
-            btn.innerText = 'عرض أقل 🔼';
-            isExpanded = true;
-        } else {
-            articleBody.style.maxHeight = '320px';
-            fadeOverlay.style.display = 'block';
-            btn.innerText = 'عرض المزيد من المقال 🔽';
-            isExpanded = false;
-            articleBody.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-    function scrollToComments() {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function shareArticle() {
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                text: 'إليك هذا المقال التقني المميز من مدونة طارق خورشيد:',
-                url: window.location.href
-            }).catch(() => {});
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert('تم نسخ رابط المقال بنجاح! يمكنك مشاركته في أي منصة.');
-        }
-    }
-
-    function escapeHtml(text) {
-        if (!text) return '';
-        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    }
-  </script>
+  <script src="../script.js" defer></script>
+  <script src="blog.js" defer></script>
 </body>
 </html>

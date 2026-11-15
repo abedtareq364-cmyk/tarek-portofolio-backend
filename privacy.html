@@ -1,64 +1,80 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سياسة الخصوصية | بورتفوليو طارق خورشيد</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .legal-container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 30px;
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .legal-container h1 { color: var(--accent-color); margin-bottom: 20px; }
-    .legal-container h2 { margin-top: 25px; margin-bottom: 10px; font-size: 1.3rem; }
-    .legal-container p, .legal-container ul { color: var(--text-muted); margin-bottom: 15px; }
-    .legal-container ul { padding-right: 20px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>سياسة الخصوصية | Tarek.Dev</title>
+  <meta name="description" content="كيف يجمع موقع tarekkorshed.com بياناتك ويستخدمها، وحقوقك في الخصوصية.">
+  <link rel="canonical" href="https://tarekkorshed.com/privacy.html">
+  <link rel="icon" href="profile.jpg">
+  <script>(function(){try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-
   <header class="navbar">
-    <a href="index.html" class="logo-area">
-      <i class="fa-solid fa-laptop-code"></i> Tarek.Dev
-    </a>
-    <a href="index.html" class="tool-btn">العودة للموقع الرئيسي ←</a>
+    <a class="logo" href="index.html"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Tarek<span class="logo-dot">.Dev</span></span></a>
+    <div class="nav-controls">
+      <a class="btn secondary small" href="index.html">الرئيسية</a>
+      <button id="themeToggle" class="control-btn" type="button" aria-label="تغيير الوضع"><i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
   </header>
 
-  <div class="legal-container">
-    <h1>سياسة الخصوصية (Privacy Policy)</h1>
-    <p>أهلاً بك في موقع <strong>tarekkorshed.com</strong>. نحن نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية وفقاً لأعلى معايير الأمان الرقمي.</p>
+  <main class="legal-container">
+    <h1>سياسة الخصوصية</h1>
+    <p class="legal-updated">آخر تحديث: [التاريخ]</p>
 
-    <h2>1. المعلومات التي نجمعها</h2>
-    <p>نحن نجمع بعض المعلومات الأساسية لضمان تقديم أفضل تجربة للمستخدم وتحسين خدماتنا:</p>
+    <h2>1. من المسؤول عن بياناتك</h2>
+    <p>المسؤول عن معالجة البيانات في موقع <strong>tarekkorshed.com</strong> هو [الاسم القانوني]، [العنوان أو بيانات النشاط وSIRET]، البريد: <a href="mailto:abedtareq364@gmail.com">abedtareq364@gmail.com</a>.</p>
+
+    <h2>2. البيانات التي أجمعها ولماذا</h2>
     <ul>
-      <li><strong>البيانات المقدمة طوعاً:</strong> مثل الاسم والبريد الإلكتروني عند تعبئة نموذج التواصل لطلب خدمة برمجية.</li>
-      <li><strong>بيانات الاستخدام التلقائية:</strong> مثل عنوان الـ IP، نوع المتصفح، والأجهزة المستخدمة من خلال تحليلات جوجل (Google Analytics).</li>
+      <li><strong>نماذج التواصل والاستشارة:</strong> الاسم والبريد الإلكتروني ونص الرسالة، ورقم الهاتف أو واتساب إذا كتبته. الغرض: الرد على طلبك. الأساس: اتخاذ إجراءات بناءً على طلبك، أو مصلحة مشروعة في الرد.</li>
+      <li><strong>التحليلات (Google Analytics):</strong> بيانات استخدام مجمّعة (الصفحات، نوع الجهاز، الدولة، عنوان IP مبسّط). لا تُفعَّل إلا بموافقتك.</li>
+      <li><strong>الإعلانات (Google AdSense):</strong> ملفات تعريف ارتباط لعرض إعلانات. لا تُفعَّل إلا بموافقتك.</li>
+      <li><strong>تفضيلات المتصفح:</strong> اللغة والوضع (فاتح/غامق) وقرار الكوكيز، تُحفظ في متصفحك فقط (localStorage).</li>
     </ul>
 
-    <h2>2. استخدام ملفات تعريف الارتباط (Cookies) والإعلانات</h2>
-    <p>يستخدم موقعنا خدمات إعلانية وتحليلية من طرف ثالث مثل <strong>Google AdSense</strong> و <strong>Google Analytics</strong>:</p>
+    <h2>3. من يستلم بياناتك</h2>
     <ul>
-      <li>تستخدم جوجل ملفات تعريف الارتباط (Cookies) لعرض الإعلانات بناءً على زياراتك المسبقة لموقعنا أو لمواقع أخرى على شبكة الإنترنت.</li>
-      <li>تساعد ملفات الكوكيز في تخصيص المحتوى الإعلاني ليكون ملائماً لاهتمامات الزائر.</li>
-      <li>يمكن للمستخدمين تعطيل تخصيص الإعلانات عن طريق زيارة إعدادات الإعلانات في حساب جوجل الخاص بهم.</li>
+      <li><strong>Render:</strong> يستضيف السيرفر الذي يستقبل رسائل نماذج التواصل ويحفظها [اذكر قاعدة البيانات ومكانها].</li>
+      <li><strong>Google:</strong> للتحليلات والإعلانات، بعد موافقتك.</li>
+      <li><strong>Cloudflare (cdnjs):</strong> يخدم مكتبة الأيقونات، ويرى عنوان IP عند تحميل الصفحة.</li>
+      <li><strong>Meta/WhatsApp:</strong> إذا ضغطت زر واتساب فسيفتح تطبيقهم ويخضع لسياستهم.</li>
+      <li><strong>الاستضافة:</strong> [اسم مزود استضافة الموقع].</li>
     </ul>
+    <p>بعض هؤلاء الأطراف يقع خارج الاتحاد الأوروبي (خاصة في الولايات المتحدة). يتم النقل بالضمانات التي يقدمونها (مثل البنود التعاقدية القياسية أو إطار خصوصية البيانات)، [راجع التفاصيل مع مختص].</p>
 
-    <h2>3. حماية البيانات وأمانها</h2>
-    <p>نحن نطبق إجراءات أمان تقنية متقدمة لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الكشف عنها، بما في ذلك التشفير الآمن (SSL/HTTPS).</p>
+    <h2>4. مدة الاحتفاظ</h2>
+    <p>رسائل التواصل: [12] شهراً من آخر مراسلة، ثم تُحذف. بيانات التحليلات: [14] شهراً.</p>
 
-    <h2>4. الاتصال بنا</h2>
-    <p>إذا كان لديك أي استفسار حول سياسة الخصوصية، يمكنك التواصل مباشرة مع المطور طارق خورشيد عبر البريد الإلكتروني: <strong>abedtareq364@gmail.com</strong>.</p>
-  </div>
+    <h2>5. ملفات تعريف الارتباط</h2>
+    <p>لا أُفعّل Google Analytics ولا AdSense قبل أن تضغط «قبول». يمكنك الرفض، وتغيير قرارك في أي وقت من رابط «إعدادات الكوكيز» في أسفل الصفحة. الرفض لا يمنع استخدام الموقع.</p>
+
+    <h2>6. حقوقك</h2>
+    <p>يحق لك طلب الاطلاع على بياناتك أو تصحيحها أو حذفها أو تقييد معالجتها أو نقلها، والاعتراض على المعالجة، وسحب موافقتك في أي وقت. راسلني على البريد أعلاه وسأرد خلال شهر. ولك الحق في تقديم شكوى إلى هيئة حماية البيانات الفرنسية <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">CNIL</a>.</p>
+
+    <h2>7. الأمان</h2>
+    <p>يعمل الموقع عبر HTTPS، والوصول إلى الرسائل المخزّنة مقصور على صاحب الموقع بوسائل توثيق. لا يوجد نظام آمن بنسبة 100%، لكنني أبذل ما في وسعي لحماية بياناتك.</p>
+
+    <h2>8. التعديلات</h2>
+    <p>قد أعدّل هذه السياسة، وتاريخ آخر تحديث مذكور في أعلى الصفحة.</p>
+
+    <p><a href="index.html" class="back-link">← العودة إلى الصفحة الرئيسية</a></p>
+  </main>
 
   <footer>
-    <p>© 2026 طارق خورشيد (Tarek.Dev) - جميع الحقوق محفوظة.</p>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="about.html">من أنا</a>
+        <a href="privacy.html">الخصوصية</a>
+        <a href="terms.html">الشروط</a>
+        <a href="disclaimer.html">إخلاء المسؤولية</a>
+        <a href="#" id="cookieSettings">إعدادات الكوكيز</a>
+      </div>
+      <p>© 2026 Tarek.Dev (tarekkorshed.com). جميع الحقوق محفوظة.</p>
+    </div>
   </footer>
-
+  <script src="script.js" defer></script>
 </body>
 </html>
