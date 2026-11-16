@@ -1,0 +1,9 @@
+# Query: blog.
+# ContextLines: 1
+
+1 نتيجة - 1 ملف
+
+blog\clean-code-js.html:
+  128    <script src="../script.js" defer></script>
+  129:   <script src="./blog/blog/js/blog.js" defer></script>
+  130  </body>
