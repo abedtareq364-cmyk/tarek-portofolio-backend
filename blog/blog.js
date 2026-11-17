@@ -113,7 +113,7 @@
     if (!text) { setStatus('اكتب نص التعليق أولاً.', 'err'); return; }
     var payload = { articleId: ID, name: nameIn.value.trim(), rating: rating, text: text };
     btn.disabled = true;
-    setStatus('جاري النشر...');
+    setStatus('جاري الإرسال...');
     api('/api/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -122,12 +122,10 @@
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) {
         if (r.status === 429) { setStatus('محاولات كثيرة، جرّب بعد قليل.', 'err'); return; }
         if (!r.ok || !d.success) throw new Error('fail');
-        if (list.querySelector('.muted')) list.replaceChildren();
-        list.prepend(renderComment(d.comment || payload));
         textIn.value = ''; nameIn.value = '';
-        setStatus('تم نشر تعليقك.', 'ok');
+        setStatus('وصل تعليقك، وسيظهر بعد المراجعة.', 'ok');
       }); })
-      .catch(function () { setStatus('تعذر نشر التعليق. حاول مرة أخرى.', 'err'); })
+      .catch(function () { setStatus('تعذر إرسال التعليق. حاول مرة أخرى.', 'err'); })
       .then(function () { btn.disabled = false; });
   });
 
