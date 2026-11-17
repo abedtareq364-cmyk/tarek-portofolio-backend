@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="admin-wrap">
-    <h1 style="margin-bottom:20px;">رسائل التواصل</h1>
+    <h1 style="margin-bottom:20px;">لوحة التحكم</h1>
 
     <form id="loginForm" class="tool-box" style="max-width:420px;margin-bottom:25px;">
       <label for="token">رمز الدخول</label>
@@ -18,15 +18,22 @@
       <button class="btn primary" type="submit">دخول</button>
     </form>
 
-    <div id="messagesContainer"></div>
+    <div id="tabs" hidden style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="btn secondary small" type="button" data-tab="messages">الرسائل</button>
+      <button class="btn secondary small" type="button" data-tab="pending">تعليقات بانتظار الموافقة</button>
+      <button class="btn secondary small" type="button" data-tab="all">كل التعليقات</button>
+    </div>
+
+    <div id="content"></div>
   </div>
 
   <script>
     (function () {
       'use strict';
       var API = 'https://tarek-portofolio-backend.onrender.com';
-      var token = '';               // في الذاكرة فقط، ويختفي بإغلاق الصفحة
-      var container = document.getElementById('messagesContainer');
+      var token = '';
+      var content = document.getElementById('content');
+      var tabs = document.getElementById('tabs');
       var form = document.getElementById('loginForm');
       var YEAR_MS = 365 * 24 * 3600 * 1000;
 
@@ -37,89 +44,145 @@
         return e;
       }
       function note(text, color) {
-        container.replaceChildren();
+        content.replaceChildren();
         var d = el('div', 'no-msg', text);
         if (color) d.style.color = color;
-        container.appendChild(d);
+        content.appendChild(d);
       }
       function authFetch(path, opts) {
         opts = opts || {};
         opts.headers = Object.assign({ Authorization: 'Bearer ' + token }, opts.headers || {});
         return fetch(API + path, opts);
       }
+      function footer() {
+        var f = el('div', '');
+        f.style.cssText = 'display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap;';
+        return f;
+      }
+      function act(method, path, btn, onOk) {
+        btn.disabled = true;
+        authFetch(path, { method: method })
+          .then(function (res) {
+            if (res.status === 401) { note('انتهت الجلسة، ادخل الرمز من جديد.', '#ef4444'); return; }
+            return res.json().catch(function () { return {}; }).then(function (data) {
+              if (!res.ok || !data.success) throw new Error('fail');
+              onOk();
+            });
+          })
+          .catch(function () { btn.disabled = false; alert('تعذر تنفيذ الإجراء، حاول مرة أخرى.'); });
+      }
+      function removeCard(card, emptyText) {
+        card.remove();
+        if (!content.querySelector('.msg-card')) note(emptyText);
+      }
 
-      function renderCard(m, card) {
+      function renderMessage(m, card) {
         var d = new Date(m.created_at || m.createdAt);
         var old = !isNaN(d) && (Date.now() - d.getTime() > YEAR_MS);
-
         var head = el('div', 'msg-header');
         head.appendChild(el('span', 'msg-name', String(m.name || '') + ' (' + String(m.email || '') + ')'));
         head.appendChild(el('span', '', isNaN(d) ? '' : d.toLocaleString('ar-EG')));
         card.appendChild(head);
-
         card.appendChild(el('div', 'msg-body', String(m.message || '')));
-
-        var foot = el('div', '');
-        foot.style.cssText = 'display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap;';
+        var foot = footer();
         if (old) {
           var badge = el('span', '', 'أقدم من 12 شهراً: الأفضل حذفها');
-          badge.style.color = 'var(--gold-text)';
-          badge.style.fontWeight = '700';
+          badge.style.cssText = 'color:var(--gold-text);font-weight:700;';
           foot.appendChild(badge);
         }
         var del = el('button', 'btn secondary small', 'حذف');
         del.type = 'button';
         del.addEventListener('click', function () {
           if (!window.confirm('حذف هذه الرسالة نهائياً؟')) return;
-          del.disabled = true;
-          authFetch('/api/messages/' + encodeURIComponent(m._id), { method: 'DELETE' })
-            .then(function (res) {
-              if (res.status === 401) { note('انتهت الجلسة، ادخل الرمز من جديد.', '#ef4444'); return; }
-              return res.json().catch(function () { return {}; }).then(function (data) {
-                if (!res.ok || !data.success) throw new Error('fail');
-                card.remove();
-                if (!container.querySelector('.msg-card')) note('لا توجد رسائل');
-              });
-            })
-            .catch(function () { del.disabled = false; alert('تعذر الحذف، حاول مرة أخرى.'); });
+          act('DELETE', '/api/messages/' + encodeURIComponent(m._id), del, function () { removeCard(card, 'لا توجد رسائل'); });
         });
         foot.appendChild(del);
         card.appendChild(foot);
       }
 
-      function load() {
+      function renderComment(c, card, pendingView) {
+        var d = new Date(c.created_at);
+        var isApproved = c.approved !== false;
+        var r = Math.min(5, Math.max(1, Math.round(Number(c.rating)) || 5));
+        var head = el('div', 'msg-header');
+        head.appendChild(el('span', 'msg-name', (String(c.name || '').trim() || 'زائر') + '  ' + '★'.repeat(r) + '☆'.repeat(5 - r)));
+        head.appendChild(el('span', '', (c.articleId ? c.articleId + ' · ' : '') + (isNaN(d) ? '' : d.toLocaleString('ar-EG'))));
+        card.appendChild(head);
+        card.appendChild(el('div', 'msg-body', String(c.text || '')));
+        var foot = footer();
+        var state = el('span', '', isApproved ? 'ظاهر للزوار' : 'بانتظار الموافقة');
+        state.style.cssText = 'font-weight:700;color:' + (isApproved ? '#22c55e' : 'var(--gold-text)') + ';';
+        foot.appendChild(state);
+        if (!isApproved) {
+          var ok = el('button', 'btn primary small', 'موافقة');
+          ok.type = 'button';
+          ok.addEventListener('click', function () {
+            act('PATCH', '/api/comments/' + encodeURIComponent(c._id) + '/approve', ok, function () {
+              if (pendingView) removeCard(card, 'لا توجد تعليقات بانتظار الموافقة');
+              else { state.textContent = 'ظاهر للزوار'; state.style.color = '#22c55e'; ok.remove(); }
+            });
+          });
+          foot.appendChild(ok);
+        }
+        var del = el('button', 'btn secondary small', 'حذف');
+        del.type = 'button';
+        del.addEventListener('click', function () {
+          if (!window.confirm('حذف هذا التعليق نهائياً؟')) return;
+          act('DELETE', '/api/comments/' + encodeURIComponent(c._id), del, function () {
+            removeCard(card, pendingView ? 'لا توجد تعليقات بانتظار الموافقة' : 'لا توجد تعليقات');
+          });
+        });
+        foot.appendChild(del);
+        card.appendChild(foot);
+      }
+
+      var views = {
+        messages: { path: '/api/messages', key: 'messages', empty: 'لا توجد رسائل حتى الآن', fn: function (m, card) { renderMessage(m, card); } },
+        pending:  { path: '/api/admin/comments', key: 'comments', empty: 'لا توجد تعليقات بانتظار الموافقة', fn: function (c, card) { renderComment(c, card, true); } },
+        all:      { path: '/api/admin/comments?status=all', key: 'comments', empty: 'لا توجد تعليقات', fn: function (c, card) { renderComment(c, card, false); } }
+      };
+
+      function showTab(name, firstLoad) {
+        var v = views[name];
         note('جاري التحميل... قد يستغرق حتى دقيقة إذا كان السيرفر نائماً.');
         var ctrl = new AbortController();
         var timer = setTimeout(function () { ctrl.abort(); }, 60000);
-        authFetch('/api/messages', { signal: ctrl.signal })
+        authFetch(v.path, { signal: ctrl.signal })
           .then(function (res) {
-            if (res.status === 401) { token = ''; note('رمز غير صحيح', '#ef4444'); return null; }
+            if (res.status === 401) { token = ''; tabs.hidden = true; note('رمز غير صحيح', '#ef4444'); return null; }
             if (!res.ok) throw new Error(String(res.status));
             return res.json();
           })
           .then(function (data) {
             if (!data) return;
-            var list = Array.isArray(data.messages) ? data.messages : [];
-            if (!data.success || !list.length) { note('لا توجد رسائل حتى الآن'); return; }
+            if (firstLoad) tabs.hidden = false;
+            var list = Array.isArray(data[v.key]) ? data[v.key] : [];
+            if (!data.success || !list.length) { note(v.empty); return; }
             var frag = document.createDocumentFragment();
-            list.forEach(function (m) {
+            list.forEach(function (item) {
               var card = el('div', 'msg-card');
-              renderCard(m, card);
+              v.fn(item, card);
               frag.appendChild(card);
             });
-            container.replaceChildren(frag);
+            content.replaceChildren(frag);
           })
           .catch(function () { note('تعذر الاتصال. حاول مرة أخرى بعد قليل.', '#ef4444'); })
           .then(function () { clearTimeout(timer); });
       }
+
+      tabs.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-tab]');
+        if (b && token) showTab(b.getAttribute('data-tab'), false);
+      });
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var input = document.getElementById('token');
         token = input.value;
         input.value = '';
-        if (token) load();
+        if (token) showTab('pending', true);
       });
     })();
   </script>
 </body>
+</html>
